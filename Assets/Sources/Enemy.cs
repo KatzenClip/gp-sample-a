@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
@@ -7,31 +8,27 @@ public class Enemy : MonoBehaviour
     [SerializeField] float moveRangeMin = -20f;
     [SerializeField] float moveSpeed = 1f;
 
-    float time = 0f;
-    bool isLeft = true;
+    [Space]
+    [SerializeField] NavMeshAgent agent = null;
+
+    bool isMoving = false;
 
     void Update()
     {
-        //UpdateLookAtTarget();
         UpdateMove();
-    }
-
-    void UpdateLookAtTarget()
-    {
-        if (null == target) return;
-
-        transform.LookAt(target);
     }
 
     void UpdateMove()
     {
-        if (moveRangeMax <= transform.localPosition.x)
+        if (!isMoving)
         {
-            isLeft = true;
+            var path = new NavMeshPath();
+            agent.CalculatePath(new Vector3(Random.Range(-WorldEnvironment.MapSize.x * 0.5f, WorldEnvironment.MapSize.x * 0.5f), 0f, Random.Range(-WorldEnvironment.MapSize.z * 0.5f, WorldEnvironment.MapSize.z * 0.5f)), path);
+            agent.SetPath(path);
+            isMoving = true;
         }
-        else if (moveRangeMin >= transform.localPosition.x)
-            isLeft = false;
 
-        transform.Translate(new Vector3(isLeft ? -1 : 1, 0, 0) * moveSpeed);
+        if (agent.velocity.magnitude <= 0.1f)
+            isMoving = false;
     }
 }

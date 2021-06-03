@@ -68,6 +68,7 @@
     <Compile Include="Assets\Sources\Enemy.cs" />
     <Compile Include="Assets\Sources\Explode.cs" />
     <Compile Include="Assets\Sources\Projectile.cs" />
+    <Compile Include="Assets\Sources\ThirdPersonCamera.cs" />
     <Compile Include="Assets\Sources\WorldEnvironment.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/workspace/UnityEditor/2019.4.24f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
